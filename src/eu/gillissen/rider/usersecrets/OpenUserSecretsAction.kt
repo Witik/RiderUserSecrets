@@ -7,26 +7,36 @@ import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.project.DefaultProjectFactory
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.LocalFileSystem
+import com.sun.javafx.PlatformUtil
 import java.io.File
 import javax.xml.parsers.DocumentBuilderFactory
 
 class OpenUserSecretsAction : AnAction() {
 
-    var chosenProject: Project = DefaultProjectFactory.getInstance().defaultProject
-    var id: String = ""
+    private var chosenProject: Project = DefaultProjectFactory.getInstance().defaultProject
+    private var id: String = ""
 
     override fun actionPerformed(actionEvent: AnActionEvent) {
-        val dirs = "${System.getenv("APPDATA")}${File.separatorChar}microsoft${File.separatorChar}UserSecrets${File.separatorChar}$id"
+        val dirs = getSecretsDirectory()
         val path = "$dirs${File.separatorChar}secrets.json"
         val file = File(path)
         if (!file.exists()) {
             File(dirs).mkdirs()
             file.createNewFile()
+            file.writeText("{\n" +
+                    "//    \"MySecret\": \"ValueOfMySecret\"\n" +
+                    "}")
         }
         val virtualFile = LocalFileSystem.getInstance().refreshAndFindFileByIoFile(file)
         if (virtualFile != null) {
             FileEditorManager.getInstance(chosenProject).openFile(virtualFile, true)
         }
+    }
+
+    private fun getSecretsDirectory(): String {
+        if (PlatformUtil.isWindows())
+            return "${System.getenv("APPDATA")}${File.separatorChar}microsoft${File.separatorChar}UserSecrets${File.separatorChar}$id"
+        return "~${File.separatorChar}.microsoft${File.separatorChar}usersecrets${File.separatorChar}$id"
     }
 
     override fun update(actionEvent: AnActionEvent) {

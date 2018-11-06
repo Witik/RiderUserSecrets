@@ -1,8 +1,8 @@
 <idea-plugin>
-    <id>eu.gillissen.rider.usersecrets</id>
-    <name>.NET Core User Secrets</name>
-    <version>0.0.2</version>
-    <vendor email="Gillissen.A@gmail.com" url="http://gillissen.eu">Alexander Gillissen</vendor>
+  <id>eu.gillissen.rider.usersecrets</id>
+  <name>.NET Core User Secrets</name>
+    <version>0.2.0</version>
+  <vendor email="Gillissen.A@gmail.com" url="http://gillissen.eu">Alexander Gillissen</vendor>
 
     <description><![CDATA[
       Open the user secrets for a project, for more information see the <a href="https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets">User Secrets documentation</a>.
@@ -21,7 +21,7 @@
                 text="Open project user secrets"
                 description="Opens the user secrets file for the project">
             <add-to-group group-id="ProjectViewPopupMenu"/>
-            <keyboard-shortcut keymap="$default" first-keystroke="alt shift S"/>
+
         </action>
     </actions>
 
