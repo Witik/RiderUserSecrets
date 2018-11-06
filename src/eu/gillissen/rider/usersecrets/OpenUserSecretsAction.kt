@@ -16,29 +16,20 @@ class OpenUserSecretsAction : AnAction() {
     var id: String = ""
 
     override fun actionPerformed(actionEvent: AnActionEvent) {
-        val dirs = "${System.getenv("APPDATA")}\\microsoft\\UserSecrets\\$id"
-        val path = "$dirs\\secrets.json"
+        val dirs = "${System.getenv("APPDATA")}${File.separatorChar}microsoft${File.separatorChar}UserSecrets${File.separatorChar}$id"
+        val path = "$dirs${File.separatorChar}secrets.json"
         val file = File(path)
         if (!file.exists()) {
             File(dirs).mkdirs()
             file.createNewFile()
         }
-        val virtualFile = LocalFileSystem.getInstance().refreshAndFindFileByIoFile(file);
+        val virtualFile = LocalFileSystem.getInstance().refreshAndFindFileByIoFile(file)
         if (virtualFile != null) {
-//            val fileDescriptor = OpenFileDescriptor(chosenProject, virtualFile)
-//            fileDescriptor.navigate(true);
             FileEditorManager.getInstance(chosenProject).openFile(virtualFile, true)
         }
     }
 
     override fun update(actionEvent: AnActionEvent) {
-        // In this method, we decide whether our action is shown in the current context or not.
-        // We should only be visible when:
-        // - A project is loaded
-        // - An editor is open
-        // - A PsiElement is available
-        //      (current PsiElement is a full File instead of a syntax tree we can reason about, but good to check)
-
         val project = actionEvent.getData(DataKeys.PROJECT)
 
         if (project == null || project.isDefault) {
@@ -71,15 +62,5 @@ class OpenUserSecretsAction : AnAction() {
         id = textContent!!
 
         actionEvent.presentation.isEnabledAndVisible = true
-
-//        val editor = e.getData(DataKeys.EDITOR)
-//        val psiElement = e.getData(DataKeys.PSI_ELEMENT)
-//
-//        if (editor == null || psiElement == null || editor.document.textLength == 0) {
-//            e.presentation.isEnabledAndVisible = false
-//            return
-//        }
-//
-//        e.presentation.isEnabledAndVisible = true
     }
 }

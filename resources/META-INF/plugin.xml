@@ -1,36 +1,28 @@
 <idea-plugin>
-  <id>eu.gillissen.rider.usersecrets</id>
-  <name>.NET Core User Secrets</name>
-  <version>0.0.1</version>
-  <vendor email="Gillissen.A@gmail.com" url="http://gillissen.eu">Alexander Gillissen</vendor>
+    <id>eu.gillissen.rider.usersecrets</id>
+    <name>.NET Core User Secrets</name>
+    <version>0.0.2</version>
+    <vendor email="Gillissen.A@gmail.com" url="http://gillissen.eu">Alexander Gillissen</vendor>
 
-  <description><![CDATA[
+    <description><![CDATA[
       Open the user secrets for a project, for more information see the <a href="https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets">User Secrets documentation</a>.
     ]]></description>
 
-  <change-notes><![CDATA[]]></change-notes>
+    <change-notes><![CDATA[
+      - Fixed OS specific separators
+]]></change-notes>
 
-  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-  <idea-version since-build="145.0"/>
+    <idea-version since-build="145.0"/>
 
-  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-       on how to target different products -->
-  <!-- uncomment to enable plugin in all products
-  <depends>com.intellij.modules.lang</depends>
-  -->
-  <depends>com.intellij.modules.rider</depends>
+    <depends>com.intellij.modules.rider</depends>
 
-  <extensions defaultExtensionNs="com.intellij">
-    <!-- Add your extensions here -->
-  </extensions>
-
-  <actions>
-    <action id="OpenUserSecretsAction" class="eu.gillissen.rider.usersecrets.OpenUserSecretsAction"
-            text="Open project user secrets"
-            description="Opens the user secrets file for the project">
-      <add-to-group group-id="ProjectViewPopupMenu" />
-      <keyboard-shortcut keymap="$default" first-keystroke="alt shift S"/>
-    </action>
-  </actions>
+    <actions>
+        <action id="OpenUserSecretsAction" class="eu.gillissen.rider.usersecrets.OpenUserSecretsAction"
+                text="Open project user secrets"
+                description="Opens the user secrets file for the project">
+            <add-to-group group-id="ProjectViewPopupMenu"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="alt shift S"/>
+        </action>
+    </actions>
 
 </idea-plugin>
