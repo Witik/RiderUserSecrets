@@ -28,15 +28,15 @@ class OpenUserSecretsAction : AnAction() {
                     "}")
         }
         val virtualFile = LocalFileSystem.getInstance().refreshAndFindFileByIoFile(file)
-        if (virtualFile != null) {
-            FileEditorManager.getInstance(chosenProject).openFile(virtualFile, true)
-        }
+                ?: return
+        FileEditorManager.getInstance(chosenProject).openFile(virtualFile, true)
     }
 
     private fun getSecretsDirectory(): String {
-        if (PlatformUtil.isWindows())
-            return "${System.getenv("APPDATA")}${File.separatorChar}microsoft${File.separatorChar}UserSecrets${File.separatorChar}$id"
-        return "~${File.separatorChar}.microsoft${File.separatorChar}usersecrets${File.separatorChar}$id"
+        return if (PlatformUtil.isWindows())
+            "${System.getenv("APPDATA")}${File.separatorChar}microsoft${File.separatorChar}UserSecrets${File.separatorChar}$id"
+        else
+            "${System.getenv("HOME")}${File.separatorChar}.microsoft${File.separatorChar}usersecrets${File.separatorChar}$id"
     }
 
     override fun update(actionEvent: AnActionEvent) {
