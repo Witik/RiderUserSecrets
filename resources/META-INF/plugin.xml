@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>eu.gillissen.rider.usersecrets</id>
   <name>.NET Core User Secrets</name>
-    <version>0.2.0</version>
+    <version>0.2.1</version>
   <vendor email="Gillissen.A@gmail.com" url="http://gillissen.eu">Alexander Gillissen</vendor>
 
     <description><![CDATA[
@@ -9,6 +9,7 @@
     ]]></description>
 
     <change-notes><![CDATA[
+      - Fixed user secrets path
       - Fixed OS specific separators
 ]]></change-notes>
 
