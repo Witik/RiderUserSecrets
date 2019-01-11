@@ -2,7 +2,7 @@ package eu.gillissen.rider.usersecrets
 
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
-import com.intellij.openapi.actionSystem.DataKeys
+import com.intellij.openapi.actionSystem.PlatformDataKeys
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.project.DefaultProjectFactory
 import com.intellij.openapi.project.Project
@@ -40,7 +40,7 @@ class OpenUserSecretsAction : AnAction() {
     }
 
     override fun update(actionEvent: AnActionEvent) {
-        val project = actionEvent.getData(DataKeys.PROJECT)
+        val project = actionEvent.getData(PlatformDataKeys.PROJECT)
 
         if (project == null || project.isDefault) {
             actionEvent.presentation.isVisible = false
@@ -48,7 +48,7 @@ class OpenUserSecretsAction : AnAction() {
             return
         }
 
-        val file = actionEvent.getData(DataKeys.VIRTUAL_FILE)
+        val file = actionEvent.getData(PlatformDataKeys.VIRTUAL_FILE)
         if (file == null || "csproj" != file.extension) {
             actionEvent.presentation.isVisible = false
             actionEvent.presentation.isEnabled = false
