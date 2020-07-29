@@ -1,6 +1,12 @@
 # .NET Core User Secrets
 Open the user secrets for a project, for more information see the [User Secrets documentation](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets).
 
+## How to use
+
+1. Make sure your .csproj file contains the `<UserSecretsId>...</UserSecretsId>` property
+2. Right-click on the project in Rider > Tools > Open project user secrets
+![Usage Example](usage.png)
+
 ## Changelog
 
 ### 0.2.3
