@@ -1,14 +1,18 @@
 <idea-plugin>
   <id>eu.gillissen.rider.usersecrets</id>
   <name>.NET Core User Secrets</name>
-    <version>0.2.2</version>
+    <version>0.2.3</version>
   <vendor email="Gillissen.A@gmail.com" url="http://gillissen.eu">Alexander Gillissen</vendor>
 
     <description><![CDATA[
       Open the user secrets for a project, for more information see the <a href="https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets">User Secrets documentation</a>.
     ]]></description>
 
-    <change-notes><![CDATA[<b>0.2.2</b>
+    <change-notes><![CDATA[<b>0.2.3</b>
+<ul>
+    <li>Fixed Rider 2020.2 compatibility</li>
+</ul>
+<b>0.2.2</b>
 <ul>
     <li>Fixed Rider 2018.3 compatibility</li>
 </ul>
