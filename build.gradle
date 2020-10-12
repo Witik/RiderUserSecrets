@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'eu.gillissen.rider'
-version '0.2.4'
+version '1.0.0'
 
 repositories {
     mavenCentral()
@@ -26,6 +26,11 @@ buildSearchableOptions {
 
 patchPluginXml {
     changeNotes """
+<b>1.0.0</b>
+<ul>
+    <li>Switched to using Gradle and the IntelliJ SDK</li>
+    <li>Added MsBuild support</li>
+</ul>
 <b>0.2.3</b>
 <ul>
     <li>Fixed Rider 2020.2 compatibility</li>
