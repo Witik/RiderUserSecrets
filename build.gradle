@@ -1,0 +1,50 @@
+plugins {
+    id 'org.jetbrains.intellij' version '0.5.0'
+    id 'org.jetbrains.kotlin.jvm' version '1.4.10'
+}
+
+group 'eu.gillissen.rider'
+version '0.2.4'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+}
+
+// See https://github.com/JetBrains/gradle-intellij-plugin/
+intellij {
+    type 'RD'
+    version '2020.2'
+}
+
+buildSearchableOptions {
+    enabled = false
+}
+
+patchPluginXml {
+    changeNotes """
+<b>0.2.3</b>
+<ul>
+    <li>Fixed Rider 2020.2 compatibility</li>
+</ul>
+<b>0.2.2</b>
+<ul>
+    <li>Fixed Rider 2018.3 compatibility</li>
+</ul>
+<b>0.2.1</b>
+<ul>
+    <li>Fixed user secrets path</li>
+</ul>
+<b>0.2.0</b>
+<ul>
+    <li>Initial cross platform support</li>
+</ul>
+<b>0.1.0</b>
+<ul>
+    <li>Default file contents</li>
+</ul>
+    """
+}

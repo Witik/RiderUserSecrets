@@ -7,6 +7,7 @@ import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.project.DefaultProjectFactory
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.LocalFileSystem
+import com.jediterm.terminal.ui.UIUtil
 import java.io.File
 import javax.xml.parsers.DocumentBuilderFactory
 
@@ -27,16 +28,12 @@ class OpenUserSecretsAction : AnAction() {
                     "}")
         }
         val virtualFile = LocalFileSystem.getInstance().refreshAndFindFileByIoFile(file)
-                ?: return
+            ?: return
         FileEditorManager.getInstance(chosenProject).openFile(virtualFile, true)
     }
 
-    private fun isWindows(): Boolean {
-        return System.getProperty("os.name").toLowerCase().contains("win")
-    }
-
     private fun getSecretsDirectory(): String {
-        return if (isWindows())
+        return if (UIUtil.isWindows)
             "${System.getenv("APPDATA")}${File.separatorChar}microsoft${File.separatorChar}UserSecrets${File.separatorChar}$id"
         else
             "${System.getenv("HOME")}${File.separatorChar}.microsoft${File.separatorChar}usersecrets${File.separatorChar}$id"

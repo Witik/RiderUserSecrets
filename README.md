@@ -24,3 +24,9 @@ Open the user secrets for a project, for more information see the [User Secrets 
 ### 0.1.0
  - Default file contents
 
+## Local development
+
+Import the project in IntelliJ as a Gradle project.
+
+* To run/debug, use the `Run/debug plugin` run configuration.
+* To create a plugin distribution, use the `Build plugin` run configuration. Once completed, the plugin ZIP file will be created in the `build/distributions` folder.
