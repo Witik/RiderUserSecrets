@@ -6,8 +6,8 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.project.DefaultProjectFactory
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.util.SystemInfo
 import com.intellij.openapi.vfs.LocalFileSystem
-import com.jediterm.terminal.ui.UIUtil
 import java.io.File
 import javax.xml.parsers.DocumentBuilderFactory
 
@@ -33,7 +33,7 @@ class OpenUserSecretsAction : AnAction() {
     }
 
     private fun getSecretsDirectory(): String {
-        return if (UIUtil.isWindows)
+        return if (SystemInfo.isWindows)
             "${System.getenv("APPDATA")}${File.separatorChar}microsoft${File.separatorChar}UserSecrets${File.separatorChar}$id"
         else
             "${System.getenv("HOME")}${File.separatorChar}.microsoft${File.separatorChar}usersecrets${File.separatorChar}$id"
