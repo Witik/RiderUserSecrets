@@ -7,11 +7,11 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.vfs.LocalFileSystem
-import com.jediterm.terminal.ui.UIUtil
 import com.jetbrains.rider.run.environment.MSBuildEvaluator
 import java.io.File
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.progress.Task
+import com.intellij.openapi.util.SystemInfo
 import java.util.concurrent.TimeUnit
 import javax.xml.parsers.DocumentBuilderFactory
 
@@ -24,9 +24,9 @@ class OpenUserSecretsAction : AnAction() {
 
     override fun update(actionEvent: AnActionEvent) {
 
-        val project = CommonDataKeys.PROJECT.getData(actionEvent.dataContext) ?: return
+        val project = CommonDataKeys.PROJECT.getData(actionEvent.dataContext)
 
-        if (project.isDefault) {
+        if (project == null || project.isDefault) {
             actionEvent.presentation.isEnabledAndVisible = false
             return
         }
@@ -81,7 +81,6 @@ class OpenUserSecretsAction : AnAction() {
                     val secretsDirectory = "$secretsDirectoryRoot${File.separatorChar}$secretsId"
                     val secretsFile = File("$secretsDirectory${File.separatorChar}secrets.json")
                     if (!secretsFile.exists()) {
-                        File(secretsDirectoryRoot).mkdirs()
                         File(secretsDirectory).mkdirs()
                         secretsFile.createNewFile()
                         secretsFile.writeText(
@@ -97,10 +96,10 @@ class OpenUserSecretsAction : AnAction() {
                 }
             }
         }.queue()
-   }
+    }
 
     private fun getSecretsDirectoryRoot(): String {
-        return if (UIUtil.isWindows)
+        return if (SystemInfo.isWindows)
             "${System.getenv("APPDATA")}${File.separatorChar}microsoft${File.separatorChar}UserSecrets${File.separatorChar}"
         else
             "${System.getenv("HOME")}${File.separatorChar}.microsoft${File.separatorChar}usersecrets${File.separatorChar}"
