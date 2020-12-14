@@ -9,6 +9,9 @@ Open the user secrets for a project, for more information see the [User Secrets 
 
 ## Changelog
 
+### 1.0.1
+ - Fixed Rider 2020.3 compatibility
+
 ### 1.0.0
  - Switched to using Gradle and the IntelliJ SDK
  - Added MsBuild support
