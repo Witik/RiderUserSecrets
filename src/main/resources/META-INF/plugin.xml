@@ -17,7 +17,6 @@
                 text="Open project user secrets"
                 description="Opens the user secrets file for the project">
             <add-to-group group-id="ProjectViewPopupMenu"/>
-
         </action>
     </actions>
 </idea-plugin>

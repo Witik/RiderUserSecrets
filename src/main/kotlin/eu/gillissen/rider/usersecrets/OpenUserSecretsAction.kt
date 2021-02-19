@@ -1,17 +1,19 @@
+@file:Suppress("UnstableApiUsage")
+
 package eu.gillissen.rider.usersecrets
 
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.actionSystem.PlatformDataKeys
-import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.fileEditor.FileEditorManager
-import com.intellij.openapi.vfs.LocalFileSystem
-import com.jetbrains.rider.run.environment.MSBuildEvaluator
-import java.io.File
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.progress.Task
 import com.intellij.openapi.util.SystemInfo
+import com.intellij.openapi.vfs.LocalFileSystem
+import com.jetbrains.rd.platform.util.application
+import com.jetbrains.rider.run.environment.MSBuildEvaluator
+import java.io.File
 import java.util.concurrent.TimeUnit
 import javax.xml.parsers.DocumentBuilderFactory
 
@@ -76,7 +78,7 @@ class OpenUserSecretsAction : AnAction() {
 
                 val secretsId = msBuildProperties[UserSecretsIdMsBuildProperty] ?: return
 
-                ApplicationManager.getApplication().invokeLaterOnWriteThread {
+                application.invokeLaterOnWriteThread {
                     val secretsDirectoryRoot = getSecretsDirectoryRoot()
                     val secretsDirectory = "$secretsDirectoryRoot${File.separatorChar}$secretsId"
                     val secretsFile = File("$secretsDirectory${File.separatorChar}secrets.json")

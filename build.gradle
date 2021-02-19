@@ -1,10 +1,10 @@
 plugins {
     id 'org.jetbrains.intellij' version '0.6.5'
-    id 'org.jetbrains.kotlin.jvm' version '1.4.10'
+    id 'org.jetbrains.kotlin.jvm' version '1.4.21'
 }
 
 group 'eu.gillissen.rider'
-version '1.0.1'
+version '1.0.2'
 
 repositories {
     mavenCentral()
@@ -17,7 +17,7 @@ dependencies {
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
     type 'RD'
-    version '2020.3'
+    version '2021.1-SNAPSHOT'
 }
 
 buildSearchableOptions {
@@ -27,6 +27,10 @@ buildSearchableOptions {
 patchPluginXml {
     untilBuild null
     changeNotes """
+<b>1.0.2</b>
+<ul>
+    <li>Fixed Rider 2021.1 compatibility</li>
+</ul>
 <b>1.0.1</b>
 <ul>
     <li>Fixed Rider 2020.3 compatibility</li>
