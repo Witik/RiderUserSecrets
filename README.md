@@ -9,6 +9,10 @@ Open the user secrets for a project, for more information see the [User Secrets 
 
 ## Changelog
 
+### 1.1.0
+- Fixed Rider 2021.1 compatibility
+- Support secrets file in Directory.Build.props
+
 ### 1.0.1
  - Fixed Rider 2020.3 compatibility
 

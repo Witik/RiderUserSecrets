@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'eu.gillissen.rider'
-version '1.0.2'
+version '1.1.0'
 
 repositories {
     mavenCentral()
@@ -27,7 +27,7 @@ buildSearchableOptions {
 patchPluginXml {
     untilBuild null
     changeNotes """
-<b>1.0.2</b>
+<b>1.1.0</b>
 <ul>
     <li>Fixed Rider 2021.1 compatibility</li>
     <li>Support secrets file in Directory.Build.props</li>
