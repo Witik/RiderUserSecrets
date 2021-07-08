@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'eu.gillissen.rider'
-version '1.1.0'
+version '1.2.0'
 
 repositories {
     mavenCentral()
@@ -35,6 +35,10 @@ compileTestKotlin {
 patchPluginXml {
     untilBuild null
     changeNotes """
+<b>1.2.0</b>
+<ul>
+    <li>Added "Initialize User Secrets" menu item</li>
+</ul>
 <b>1.1.0</b>
 <ul>
     <li>Fixed Rider 2021.1 compatibility</li>
