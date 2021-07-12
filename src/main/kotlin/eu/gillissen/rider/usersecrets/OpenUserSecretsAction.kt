@@ -8,7 +8,6 @@ import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.progress.Task
 import com.intellij.openapi.vfs.LocalFileSystem
-import com.intellij.openapi.vfs.VirtualFile
 import com.jetbrains.rd.platform.util.application
 import java.io.File
 
@@ -17,7 +16,7 @@ class OpenUserSecretsAction : AnAction() {
     override fun update(actionEvent: AnActionEvent) {
         actionEvent.presentation.isEnabledAndVisible = false
 
-        if (!isActionSupported(actionEvent)) {
+        if (!UserSecretsService.isActionSupported(actionEvent)) {
             return
         }
 
@@ -32,7 +31,7 @@ class OpenUserSecretsAction : AnAction() {
     }
 
     override fun actionPerformed(actionEvent: AnActionEvent) {
-        if (!isActionSupported(actionEvent)) {
+        if (!UserSecretsService.isActionSupported(actionEvent)) {
             return
         }
 
@@ -64,26 +63,5 @@ class OpenUserSecretsAction : AnAction() {
                 }
             }
         }.queue()
-    }
-
-    private fun isActionSupported(actionEvent: AnActionEvent): Boolean {
-        val project = actionEvent.getActionProject()
-        if (project == null || project.isDefault) {
-            return false
-        }
-
-        val projectFile = actionEvent.getActionProjectFile()
-        if (projectFile == null || !isActionSupportedForFile(projectFile)) {
-            return false
-        }
-
-        return true
-    }
-
-    private fun isActionSupportedForFile(projectFile: VirtualFile?): Boolean {
-        if (projectFile == null) return false
-
-        return UserSecretsService.supportedFileExtensions.any { it.equals(projectFile.extension, ignoreCase = true) } ||
-                UserSecretsService.supportedFileNames.any { it.equals(projectFile.name, ignoreCase = true) }
     }
 }

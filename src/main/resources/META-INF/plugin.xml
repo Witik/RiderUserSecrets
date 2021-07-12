@@ -4,7 +4,7 @@
     <vendor email="Gillissen.A@gmail.com" url="http://gillissen.eu">Alexander Gillissen</vendor>
 
     <description><![CDATA[
-      Adds ability to Add new and to Open existing User Secrets, for more information see the <a href="https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets">User Secrets documentation</a>.
+      Adds the ability to create and open User Secrets, for more information see the <a href="https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets">User Secrets documentation</a>.
     ]]></description>
 
     <depends>com.intellij.modules.rider</depends>
@@ -16,7 +16,7 @@
     <actions>
         <action id="InitUserSecretsAction" class="eu.gillissen.rider.usersecrets.InitUserSecretsAction"
                 text="Initialize User Secrets"
-                description="Initializes user secrets for given project">
+                description="Initializes user secrets for the project">
             <add-to-group group-id="ProjectViewPopupMenu"/>
         </action>
         <action id="OpenUserSecretsAction" class="eu.gillissen.rider.usersecrets.OpenUserSecretsAction"

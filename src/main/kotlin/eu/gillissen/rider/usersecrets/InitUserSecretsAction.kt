@@ -6,13 +6,12 @@ import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.progress.Task
-import com.intellij.openapi.vfs.VirtualFile
 
 class InitUserSecretsAction : AnAction() {
     override fun update(actionEvent: AnActionEvent) {
         actionEvent.presentation.isEnabledAndVisible = false
 
-        if (!isActionSupported(actionEvent)) {
+        if (!UserSecretsService.isActionSupported(actionEvent)) {
             return
         }
 
@@ -27,7 +26,7 @@ class InitUserSecretsAction : AnAction() {
     }
 
     override fun actionPerformed(actionEvent: AnActionEvent) {
-        if (!isActionSupported(actionEvent)) {
+        if (!UserSecretsService.isActionSupported(actionEvent)) {
             return
         }
 
@@ -48,25 +47,5 @@ class InitUserSecretsAction : AnAction() {
                 projectFile.refresh(true, false)
             }
         }.queue()
-    }
-
-    private fun isActionSupported(actionEvent: AnActionEvent): Boolean {
-        val project = actionEvent.getActionProject()
-        if (project == null || project.isDefault) {
-            return false
-        }
-
-        val projectFile = actionEvent.getActionProjectFile()
-        if (projectFile == null || !isActionSupportedForFile(projectFile)) {
-            return false
-        }
-
-        return true
-    }
-
-    private fun isActionSupportedForFile(file: VirtualFile?): Boolean {
-        if (file == null) return false
-
-        return UserSecretsService.supportedFileExtensions.any { it.equals(file.extension, ignoreCase = true) }
     }
 }
