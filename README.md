@@ -9,6 +9,9 @@ Open the user secrets for a project, for more information see the [User Secrets 
 
 ## Changelog
 
+### 1.2.0
+- Added "Initialize User Secrets" menu item
+
 ### 1.1.0
 - Fixed Rider 2021.1 compatibility
 - Support secrets file in Directory.Build.props
