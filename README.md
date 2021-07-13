@@ -1,10 +1,18 @@
 # .NET Core User Secrets
-Open the user secrets for a project, for more information see the [User Secrets documentation](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets).
+This plugin adds the ability to create and open User Secrets, for more information see the [User Secrets documentation](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets).
 
 ## How to use
 
-1. Make sure your .csproj file contains the `<UserSecretsId>...</UserSecretsId>` property
-2. Right-click on the project in Rider > Tools > Open project user secrets
+1. Right-click on the .NET project file and navigate to `Tools` section
+1.
+    Click **Initialize User Secrets** to add support for User Secrets if project doesn't have it yet
+    
+    or
+    
+    Click **Open Project User Secrets** to open existing project secrets file for editing 
+
+Both context menu actions are also supported for `Directory.Build.props` and `Directory.Build.targets` files
+
 ![Usage Example](usage.png)
 
 ## Changelog
