@@ -25,7 +25,7 @@ internal fun Document.insertUserSecrets(propertyGroup: Node, value: String, inde
     val newUserSecretsId = createElement(SharedConstants.UserSecretsIdMsBuildProperty)
     newUserSecretsId.textContent = value
 
-    return propertyGroup.insertLastIndented(newUserSecretsId, this, indentOptions)
+    return propertyGroup.insertLastIndented(newUserSecretsId, indentOptions)
 }
 
 internal fun Document.insertPropertyGroup(indentOptions: CommonCodeStyleSettings.IndentOptions): Node {
@@ -59,14 +59,14 @@ internal fun Node.insertFirstIndented(child: Node, indentOptions: CommonCodeStyl
     return insertChildAfterIndent(ownerDocument, child, insertedIndentNode, parentIndent)
 }
 
-internal fun Node.insertLastIndented(child: Node, doc: Document, indentOptions: CommonCodeStyleSettings.IndentOptions): Node {
+internal fun Node.insertLastIndented(child: Node, indentOptions: CommonCodeStyleSettings.IndentOptions): Node {
     val parentIndent = this.getOuterIndent()
     val childIndent = indentOptions.createIndent(1)
-    val childIndentNode = doc.createTextNode("$parentIndent$childIndent")
+    val childIndentNode = ownerDocument.createTextNode("$parentIndent$childIndent")
 
     val insertedIndentNode = insertBeforeLastText(childIndentNode)
 
-    return insertChildAfterIndent(doc, child, insertedIndentNode, parentIndent)
+    return insertChildAfterIndent(ownerDocument, child, insertedIndentNode, parentIndent)
 }
 
 internal fun NodeList.first(predicate: (Node) -> Boolean): Node? {

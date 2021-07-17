@@ -7,20 +7,20 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import javax.xml.parsers.DocumentBuilderFactory
 
-fun AnActionEvent.getActionProjectFile(): VirtualFile? =
+internal fun AnActionEvent.getActionProjectFile(): VirtualFile? =
     getData(PlatformDataKeys.VIRTUAL_FILE)
 
-fun AnActionEvent.getActionProject(): Project? =
+internal fun AnActionEvent.getActionProject(): Project? =
     CommonDataKeys.PROJECT.getData(dataContext)
 
-fun AnActionEvent.getXmlUserSecretsIdValue(): String? {
+internal fun AnActionEvent.getXmlUserSecretsIdValue(): String? {
     val projectFile = getActionProjectFile()
     val document = DocumentBuilderFactory.newInstance()
         .newDocumentBuilder()
         .parse(projectFile!!.inputStream)
     document.documentElement.normalize()
 
-    val nodes = document.getElementsByTagName(UserSecretsService.UserSecretsIdMsBuildProperty)
+    val nodes = document.getElementsByTagName(SharedConstants.UserSecretsIdMsBuildProperty)
 
     if (nodes.length == 0) {
         return null
