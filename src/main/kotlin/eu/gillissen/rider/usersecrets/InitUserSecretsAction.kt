@@ -1,9 +1,8 @@
 package eu.gillissen.rider.usersecrets
 
-import com.intellij.notification.NotificationGroupManager
-import com.intellij.notification.NotificationType
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.progress.Task
 
@@ -35,16 +34,9 @@ class InitUserSecretsAction : AnAction() {
 
         object : Task.Backgroundable(project, "Adding user secrets...", true, DEAF) {
             override fun run(indicator: ProgressIndicator) {
-                val toolInstalled = UserSecretsService.isUserSecretsToolInstalled()
-                if (!toolInstalled) {
-                    NotificationGroupManager.getInstance().getNotificationGroup("User Secrets Notification Group")
-                        .createNotification("User Secrets global tool not found", NotificationType.ERROR)
-                        .notify(project);
-                    return
+                ApplicationManager.getApplication().invokeAndWait {
+                    UserSecretsService.initUserSecrets(projectFile, project)
                 }
-
-                UserSecretsService.initUserSecrets(projectFile)
-                projectFile.refresh(true, false)
             }
         }.queue()
     }
