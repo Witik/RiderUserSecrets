@@ -4,12 +4,9 @@ package eu.gillissen.rider.usersecrets
 
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
-import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.progress.Task
-import com.intellij.openapi.vfs.LocalFileSystem
 import com.jetbrains.rd.platform.util.application
-import java.io.File
 
 class OpenUserSecretsAction : AnAction() {
 
@@ -44,22 +41,7 @@ class OpenUserSecretsAction : AnAction() {
                 val secretsId = UserSecretsService.getMsbuildUserSecretsIdValue(project, projectFile) ?: return
 
                 application.invokeLaterOnWriteThread {
-                    val secretsDirectoryRoot = UserSecretsService.getUserSecretsDirectoryRoot()
-                    val secretsDirectory = "$secretsDirectoryRoot${File.separatorChar}$secretsId"
-                    val secretsFile = File("$secretsDirectory${File.separatorChar}secrets.json")
-                    if (!secretsFile.exists()) {
-                        File(secretsDirectory).mkdirs()
-                        secretsFile.createNewFile()
-                        secretsFile.writeText(
-                            "{\n" +
-                                    "//    \"MySecret\": \"ValueOfMySecret\"\n" +
-                                    "}"
-                        )
-                    }
-
-                    LocalFileSystem.getInstance().refreshAndFindFileByIoFile(secretsFile)?.let {
-                        FileEditorManager.getInstance(project).openFile(it, true)
-                    }
+                    UserSecretsService.openUserSecrets(secretsId, project)
                 }
             }
         }.queue()

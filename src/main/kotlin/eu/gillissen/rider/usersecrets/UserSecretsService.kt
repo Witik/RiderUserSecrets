@@ -2,8 +2,10 @@ package eu.gillissen.rider.usersecrets
 
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.fileEditor.FileDocumentManager
+import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.SystemInfo
+import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.codeStyle.CommonCodeStyleSettings
@@ -45,7 +47,7 @@ object UserSecretsService {
         return msBuildProperties[SharedConstants.UserSecretsIdMsBuildProperty]
     }
 
-    internal fun getUserSecretsDirectoryRoot(): String {
+    private fun getUserSecretsDirectoryRoot(): String {
         return if (SystemInfo.isWindows)
             "${System.getenv("APPDATA")}${File.separatorChar}microsoft${File.separatorChar}UserSecrets${File.separatorChar}"
         else
@@ -69,7 +71,8 @@ object UserSecretsService {
     private fun initUserSecretsUsingMsBuild(file: VirtualFile, project: Project) {
         val projectModelEntity = file.containingEntity(project) ?: return
         val projectId = projectModelEntity.getId(project) ?: return
-        val changeUserSecret = RdChangeProjectProperty(SharedConstants.UserSecretsIdMsBuildProperty, UUID.randomUUID().toString())
+        val secretsId = UUID.randomUUID().toString()
+        val changeUserSecret = RdChangeProjectProperty(SharedConstants.UserSecretsIdMsBuildProperty, secretsId)
         val propertiesToUpdate = listOf(changeUserSecret)
         val command = RdChangeProjectPropertiesCommand(projectId, propertiesToUpdate)
         Lifetime.using { lifetime ->
@@ -77,6 +80,8 @@ object UserSecretsService {
                 file.refresh(true, false)
             }
         }
+
+        openUserSecrets(secretsId, project)
     }
 
     private fun initUserSecretsUsingXml(file: VirtualFile, project: Project) {
@@ -87,9 +92,31 @@ object UserSecretsService {
 
         val indentOptions = getIndentOptions(file, FileDocumentManager.getInstance(), PsiDocumentManager.getInstance(project))
         val propertyGroup = document.getOrCreatePropertyGroup(indentOptions)
-        document.insertUserSecrets(propertyGroup, UUID.randomUUID().toString(), indentOptions)
+        val secretsId = UUID.randomUUID().toString()
+        document.insertUserSecrets(propertyGroup, secretsId, indentOptions)
         document.saveToFile(file.path)
         file.refresh(false, false)
+
+        openUserSecrets(secretsId, project)
+    }
+
+    fun openUserSecrets(secretsId: String, project: Project) {
+        val secretsDirectoryRoot = getUserSecretsDirectoryRoot()
+        val secretsDirectory = "$secretsDirectoryRoot${File.separatorChar}$secretsId"
+        val secretsFile = File("$secretsDirectory${File.separatorChar}secrets.json")
+        if (!secretsFile.exists()) {
+            File(secretsDirectory).mkdirs()
+            secretsFile.createNewFile()
+            secretsFile.writeText(
+                "{\n" +
+                        "//    \"MySecret\": \"ValueOfMySecret\"\n" +
+                        "}"
+            )
+        }
+
+        LocalFileSystem.getInstance().refreshAndFindFileByIoFile(secretsFile)?.let {
+            FileEditorManager.getInstance(project).openFile(it, true)
+        }
     }
 
     private fun getIndentOptions(file: VirtualFile, fileDocumentManager: FileDocumentManager, psiDocumentManager: PsiDocumentManager): CommonCodeStyleSettings.IndentOptions =
