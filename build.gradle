@@ -40,8 +40,8 @@ compileTestKotlin {
 }
 
 patchPluginXml {
-    untilBuild null
-    changeNotes """
+    untilBuild = null
+    changeNotes = """
 <b>1.2.0</b>
 <ul>
     <li>Fixed Rider 2021.2 compatibility</li>
