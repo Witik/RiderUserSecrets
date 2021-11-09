@@ -1,12 +1,13 @@
 plugins {
-    id 'org.jetbrains.intellij' version '0.7.2'
-    id 'org.jetbrains.kotlin.jvm' version '1.4.21'
+    id 'org.jetbrains.intellij' version '1.2.1'
+    id 'org.jetbrains.kotlin.jvm' version '1.5.31'
 }
 
 group 'eu.gillissen.rider'
-version '1.2.0'
+version '1.3.0'
 
 repositories {
+    maven { url 'https://cache-redirector.jetbrains.com/intellij-repository/snapshots' } // Support for targeting EAP
     mavenCentral()
 }
 
@@ -14,10 +15,16 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
 }
 
+wrapper {
+    gradleVersion = '6.8.2'
+    distributionType = Wrapper.DistributionType.ALL
+    distributionUrl = "https://cache-redirector.jetbrains.com/services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
+}
+
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    type 'RD'
-    version '2021.1.0'
+    type = 'RD'
+    version = '2021.3-EAP7-SNAPSHOT'
 }
 
 buildSearchableOptions {
@@ -33,8 +40,8 @@ compileTestKotlin {
 }
 
 patchPluginXml {
-    untilBuild null
-    changeNotes """
+    untilBuild = null
+    changeNotes = """
 <b>1.2.0</b>
 <ul>
     <li>Added "Initialize User Secrets" menu item</li>
