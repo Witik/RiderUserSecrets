@@ -42,6 +42,10 @@ compileTestKotlin {
 patchPluginXml {
     untilBuild = null
     changeNotes = """
+<b>1.3.0</b>
+<ul>
+    <li>Use <code>File.resolve()</code> to resolve file paths</li>
+</ul>
 <b>1.2.0</b>
 <ul>
     <li>Added "Initialize User Secrets" menu item</li>
