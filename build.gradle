@@ -24,7 +24,7 @@ wrapper {
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
     type = 'RD'
-    version = '2021.3-EAP7-SNAPSHOT'
+    version = '2021.3-EAP9-SNAPSHOT'
 }
 
 buildSearchableOptions {
