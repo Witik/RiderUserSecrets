@@ -47,11 +47,11 @@ object UserSecretsService {
         return msBuildProperties[SharedConstants.UserSecretsIdMsBuildProperty]
     }
 
-    private fun getUserSecretsDirectoryRoot(): String {
+    private fun getUserSecretsDirectoryRoot(): File {
         return if (SystemInfo.isWindows)
-            "${System.getenv("APPDATA")}${File.separatorChar}microsoft${File.separatorChar}UserSecrets${File.separatorChar}"
+            File(System.getenv("APPDATA")).resolve("microsoft").resolve("UserSecrets")
         else
-            "${System.getenv("HOME")}${File.separatorChar}.microsoft${File.separatorChar}usersecrets${File.separatorChar}"
+            File(System.getenv("HOME")).resolve("microsoft").resolve("usersecrets")
     }
 
     internal fun isActionSupported(actionEvent: AnActionEvent): Boolean {
@@ -102,10 +102,10 @@ object UserSecretsService {
 
     fun openUserSecrets(secretsId: String, project: Project) {
         val secretsDirectoryRoot = getUserSecretsDirectoryRoot()
-        val secretsDirectory = "$secretsDirectoryRoot${File.separatorChar}$secretsId"
-        val secretsFile = File("$secretsDirectory${File.separatorChar}secrets.json")
+        val secretsDirectory = secretsDirectoryRoot.resolve(secretsId)
+        val secretsFile = secretsDirectory.resolve("secrets.json")
         if (!secretsFile.exists()) {
-            File(secretsDirectory).mkdirs()
+            secretsDirectory.mkdirs()
             secretsFile.createNewFile()
             secretsFile.writeText(
                 "{\n" +
